@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Emergency Panic Button</title>
+  <script>
+    function sendLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+
+          // Replace with your actual form link
+          var formBaseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdABC1234567890/viewform";
+
+          // Replace these with your actual entry IDs
+          var messageEntry = "entry.1234567890";   // Emergency Message
+          var locationEntry = "entry.2345678901";  // Location
+
+          var helpMessage = "Help me!";
+          var location = lat + "," + lng;
+
+          var formUrl = formBaseUrl + "?" +
+            messageEntry + "=" + encodeURIComponent(helpMessage) + "&" +
+            locationEntry + "=" + encodeURIComponent(location);
+
+          // Redirect to the prefilled form
+          window.location.href = formUrl;
+        }, function(error) {
+          alert("Location access denied. Cannot send emergency alert.");
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+  </script>
+</head>
+<body onload="sendLocation()" style="font-family: sans-serif; text-align: center; margin-top: 50px;">
+  <h2>Sending Emergency Alert...</h2>
+  <p>Please wait while we capture your location and redirect you.</p>
+</body>
+</html>
